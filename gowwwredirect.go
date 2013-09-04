@@ -1,15 +1,15 @@
 package main
 
 import (
-	"net/http"
-	"github.com/jcelliott/lumber"
+        "net/http"
+        "github.com/jcelliott/lumber"
 )
 
 func redirHandler(w http.ResponseWriter, r *http.Request) {
-  newDomain := "www." + r.Host
+  newDomain := "http://www." + r.Host
   lumber.Info("Domain: "+newDomain)
-	http.Redirect(w, r, newDomain, http.StatusFound)
-	return
+        http.Redirect(w, r, newDomain, http.StatusFound)
+        return
 }
 
 func main() {
