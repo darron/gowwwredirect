@@ -4,18 +4,21 @@ build:
 	go build gowwwredirect.go
 
 install:
-	cp gowwwredirect /usr/local/sbin/
-	chmod 750 /usr/local/sbin/gowwwredirect
-	chown root.root /usr/local/sbin/gowwwredirect
-	cp gowwwredirect.conf /etc/init/
-	ln -s /lib/init/upstart-job /etc/init.d/gowwwredirect
+	mkdir -p $(DESTDIR)/usr/local/sbin/
+	cp gowwwredirect $(DESTDIR)/usr/local/sbin/
+	chmod 750 $(DESTDIR)/usr/local/sbin/gowwwredirect
+	chown root.root $(DESTDIR)/usr/local/sbin/gowwwredirect
+	mkdir -p $(DESTDIR)/etc/init
+	cp gowwwredirect.conf $(DESTDIR)/etc/init/
+	mkdir -p $(DESTDIR)/etc/init.d
+	ln -s $(DESTDIR)/lib/init/upstart-job $(DESTDIR)/etc/init.d/gowwwredirect
 	/usr/sbin/update-rc.d gowwwredirect defaults
 
 uninstall:
-	rm -rf /usr/local/sbin/gowwwredirect
+	rm -rf $(DESTDIR)/usr/local/sbin/gowwwredirect
 	/usr/sbin/update-rc.d -f gowwwredirect remove
-	rm /etc/init/gowwwredirect.conf
-	rm /etc/init.d/gowwwredirect
+	rm $(DESTDIR)/etc/init/gowwwredirect.conf
+	rm $(DESTDIR)/etc/init.d/gowwwredirect
 
 clean:
 	rm -rf gowwwredirect
